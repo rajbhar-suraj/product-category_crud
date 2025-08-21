@@ -1,0 +1,67 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-8">
+  <!-- Add Category Form -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4 text-gray-700">Add Category</h2>
+    <div class="flex gap-3 flex-col sm:flex-row items-start sm:items-center">
+      <input 
+        type="text" 
+        [(ngModel)]="newCategory.category_name" 
+        class="flex-1 border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        placeholder="Enter category name"
+        required
+      >
+      <button 
+        type="submit" 
+        (click)="addCategories()" 
+        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition duration-200">
+        Add Category
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-gray-200 rounded-lg divide-y divide-gray-100">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">ID</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Category Name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <tr *ngFor="let category of categories" class="hover:bg-gray-50 transition duration-200 ease-in-out">
+          <td class="px-6 py-4 text-gray-700 font-medium">{{ category.category_id }}</td>
+          <td class="px-6 py-4 text-gray-700">
+            <input 
+              *ngIf="editingCategory?.category_id === category.category_id" 
+              [(ngModel)]="editingCategory!.category_name" 
+              class="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+            <span *ngIf="editingCategory?.category_id !== category.category_id">
+              {{ category.category_name }}
+            </span>
+          </td>
+          <td class="px-6 py-4 space-x-2">
+            <button 
+              *ngIf="editingCategory?.category_id !== category.category_id"
+              (click)="startEdit(category)" 
+              class="bg-blue-700 hover:bg-blue-900 text-white px-3 py-1 rounded-lg transition duration-200">
+              Edit
+            </button>
+            <button 
+              *ngIf="editingCategory?.category_id === category.category_id"
+              (click)="updateCategory()" 
+              class="bg-green-700 hover:bg-green-900 text-white px-3 py-1 rounded-lg transition duration-200">
+              Save
+            </button>
+            <button 
+              (click)="confirmDelete(category.category_id!)" 
+              class="bg-red-600 hover:bg-red-800 text-white px-3 py-1 rounded-lg transition duration-200">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

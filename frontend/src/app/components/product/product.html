@@ -1,0 +1,105 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-8">
+  <!-- Add Product Form -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4 text-gray-700">Add Product</h2>
+    <div class="flex flex-col gap-4">
+      <!-- Product Name -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Product Name</label>
+        <input type="text" [(ngModel)]="newProducts.product_name"
+          class="border p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter product name" required>
+      </div>
+
+      <!-- Category Select -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Select Category</label>
+        <select [(ngModel)]="newProducts.category_id"
+          class="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option value="" disabled hidden>Select a category</option>
+          <option *ngFor="let category of categories" [value]="category.category_id">
+            {{ category.category_name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Add Product Button -->
+      <button type="submit" (click)="createProduct()"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition duration-200">
+        Add Product
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-gray-200 rounded-lg divide-y divide-gray-100 shadow-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Product ID</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Product Name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Category Name
+          </th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <tr *ngFor="let product of inventory" class="hover:bg-gray-50 transition duration-200 ease-in-out">
+          <td class="px-6 py-4 text-gray-700 font-medium">{{ product.product_id }}</td>
+          <td class="px-6 py-4 text-gray-700">
+            <input *ngIf="editingProduct?.product_id === product.product_id" [(ngModel)]="editingProduct!.product_name"
+              class="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+            <span *ngIf="editingProduct?.product_id !== product.product_id">
+              {{ product.product_name }}
+            </span>
+          </td>
+          <td class="px-6 py-4 text-gray-700">
+            <!-- Dropdown when editing -->
+            <select *ngIf="editingProduct?.product_id === product.product_id" [(ngModel)]="editingProduct!.category_id"
+              class="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+              <option *ngFor="let category of categories" [value]="category.category_id">
+                {{ category.category_name }}
+              </option>
+            </select>
+
+            <!-- Show text otherwise -->
+            <span *ngIf="editingProduct?.product_id !== product.product_id">
+              {{ product.category_name }}
+            </span>
+          </td>
+
+          <td class="px-6 py-4 space-x-2">
+            <!-- Edit Button -->
+            <button *ngIf="editingProduct?.product_id !== product.product_id" (click)="startEdit(product)"
+              class="bg-blue-700 hover:bg-blue-900 text-white px-3 py-1 rounded-lg transition duration-200">
+              Edit
+            </button>
+
+            <!-- Save Button -->
+            <button *ngIf="editingProduct?.product_id === product.product_id" (click)="updateProduct()"
+              class="bg-green-700 hover:bg-green-900 text-white px-3 py-1 rounded-lg transition duration-200">
+              Save
+            </button>
+
+            <button (click)="confirmDelete(product.product_id!)"
+              class="bg-red-600 hover:bg-red-800 text-white px-3 py-1 rounded-lg transition duration-200">
+
+              Delete
+            </button>
+            <button *ngIf="editingProduct?.product_id === product.product_id" (click)="cancelEdit()"
+              class="bg-gray-700 hover:bg-gray-800 text-white px-3 py-1 rounded-lg transition duration-200">
+              X
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex justify-center items-center gap-3 mt-6">
+      <button *ngFor="let page of totalPages" (click)="loadProducts(page)"
+        class="px-4 py-2 rounded-md text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-800 transition duration-200">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</div>
