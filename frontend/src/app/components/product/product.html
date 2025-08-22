@@ -14,13 +14,15 @@
       <!-- Category Select -->
       <div>
         <label class="block text-sm font-medium mb-1">Select Category</label>
+
         <select [(ngModel)]="newProducts.category_id"
           class="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <option value="" disabled hidden>Select a category</option>
+          <option [ngValue]="null" value="select" disabled selected>Select a category</option>
           <option *ngFor="let category of categories" [value]="category.category_id">
             {{ category.category_name }}
           </option>
         </select>
+
       </div>
 
       <!-- Add Product Button -->

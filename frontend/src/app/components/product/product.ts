@@ -36,11 +36,9 @@ export class ProductComponent implements OnInit {
 
     })
     this.products.getProductsWithCategories(page).subscribe((res: any) => {
-      console.log("loading the products", res.products)
       this.inventory = res.products
     })
     this.category.getCategories().subscribe((res: any) => {
-      console.log("loading the categories", res)
       this.categories = res.categories
     })
   }
@@ -65,7 +63,6 @@ export class ProductComponent implements OnInit {
       this.toastr.warning("Cannot be empty")
       return
     }
-    console.log("this.editingProduct", this.editingProduct)
     this.products.updateProducts(this.editingProduct.product_id!, this.editingProduct).subscribe(() => {
       this.editingProduct = null;
       this.toastr.success("Product updated successfully")

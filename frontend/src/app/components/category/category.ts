@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
   startEdit(category: Category) {
     this.editingCategory = { ...category };
   }
-  
+
   ngOnInit(): void {
     this.loadCategories()
   }
@@ -51,7 +51,7 @@ export class CategoryComponent implements OnInit {
   }
 
   updateCategory() {
-    
+
     if (!this.editingCategory?.category_name) {
       this.toastr.warning("Cannot be empty")
       return
@@ -64,6 +64,9 @@ export class CategoryComponent implements OnInit {
     })
   }
 
+  cancelEdit() {
+    this.editingCategory = null;
+  }
   confirmDelete(id: number) {
     if (confirm("Are you sure you want to delete this category?")) {
       this.deleteCategory(id);
