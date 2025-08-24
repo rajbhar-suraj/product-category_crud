@@ -2,6 +2,18 @@
 
 ---
 
+How to Run the Project
+
+Backend-
+Copy .env (already present or create one) and ensure MySQL DB nimap exists with tables categories and products.
+cd backend && npm install
+npm start (runs with nodemon on PORT from .env, default 5000)
+
+Frontend-
+cd frontend && npm install
+npm start – launches Angular dev server (default http://localhost:4200).
+The frontend expects the backend at http://localhost:5000/api; adjust CategoryService and ProductService base URLs if needed.
+
 ### Purpose
 This repository implements a simple CRUD (Create‑Read‑Update‑Delete) application for managing **product categories** and **products**. It consists of a **Node.js/Express** backend API backed by a MySQL database and an **Angular** frontend UI that consumes the API.
 
@@ -114,3 +126,4 @@ The frontend expects the backend at `http://localhost:5000/api`; adjust `Categor
 ---
 
 **In short**, this repo provides a straightforward full‑stack example of managing categories and products, illustrating the typical separation of concerns (REST API + Angular UI) and serving as a solid foundation for extending functionality, adding security, or integrating more sophisticated UI/UX features.
+
